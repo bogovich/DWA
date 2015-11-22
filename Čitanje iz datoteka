@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<?php
+
+$path = 'file.txt';
+
+// ČITAJ REDAK PO REDAK
+
+$fh = fopen($path, 'r');
+while (($red = fgets($fh, 4096)) !== false) 
+{	
+	$redak = explode(" ", $red);
+	var_dump($redak);
+}
+fclose($fh);
+
+
+?>
+
+<?php
+//čitanje znak po znak i sve moguće provjere
+
+
+$path = './file.txt';
+
+if(file_exists($path)) 
+{
+	if(is_readable($path))
+	{
+		if(filesize($path) > 0) 
+		{
+			
+			$fh = fopen($path, 'r');
+			
+			while (($char = fgetc($fh)) !== false)
+			{
+				echo $char.'<br>';
+			}
+			
+			fclose($fh);
+		} 
+	}
+}
+
+?>
+
+//Komplicirano čitanje sa separatorima
+if(file_exists($path)) // DA LI POSTOJI DATOTEKA?
+{
+	if(is_readable($path)) // ČITLJIVO?
+	{
+		if(filesize($path) > 0) // PRAZANO?
+		{
+			$SEP = "\t"; // SEPARATOR
+			$NL = "\n"; // NOVI REDAK
+			// OTVORI FILE ZA ČITANJE
+			$fh = fopen($path, 'r');
+			// ČITAJ REDAK PO REDAK
+			while (($red = fgets($fh, 4096)) !== false) 
+			{	
+				$redak = explode(" ", $red);
+				foreach($redak as $r)
+				{
+					$sadrzaj .= trim($r).$SEP;
+				}
+				$sadrzaj .= $NL;
+			}
+			// ZATVORI FILE
+			fclose($fh);
+		} 
+	}
+}
+
+
+
+</body>
+</html>
