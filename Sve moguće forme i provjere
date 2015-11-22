@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+
+
+<form name="form" method="post" action="">
+  
+  <p>Ime: 
+    <input name="ime" type="text" id="ime">
+  </p>
+
+  <p>Password: 
+    <input name="password" type="password" id="password">
+  </p>
+  
+        <p>Spol: 
+          <input type="radio" name="spol" value="Z">
+          Ženski 
+          <input type="radio" name="spol" value="M">
+          Muški
+	</p>
+  
+<p>Predložak: 
+          <select name="predlozak" size="10" multiple id="predlozak">
+            <option value="P">Plavi</option>
+            <option value="Z">Zeleni</option>
+            <option value="N">Narančasti</option>
+          </select>
+</p>
+
+        <p>Newsletter: 
+          <input name="newsletter" type="checkbox" id="newsletter" value="1" checked>
+
+        </p>
+        <p>Poruka adminu: 
+          <textarea name="poruka" id="poruka"></textarea>
+        </p>
+
+        <p> 
+          <input type="submit" name="Submit2" value="Registracija">
+          
+	  <input name="skriveno" type="hidden" id="skriveno" value="1">
+        </p>
+
+</form>'
+
+<?php
+// PROVJERA IME, PREZIME, USERNAME, EMAIL
+$ok = true; 
+$poruke = array();
+
+$ime = $_POST['ime'];
+if(strlen($ime)<2) { $ok = false; $poruke[]='Prekratko ime'; }
+
+$prezime = $_POST['prezime'];
+if(strlen($prezime)<2) { $ok = false; 
+							$poruke[]='Prekratko prezime'; }
+
+$username = $_POST['username'];
+if(strlen($username)<6) { $ok = false; 
+								$poruke[]='Prekratki username'; }
+// USPOREDI PASSWORDE
+$pass1 = $_POST['password'];
+$pass2 = $_POST['ppassword'];
+if($pass1!==$pass2) { $ok = false; 
+						$poruke[]='Passwordi nisu jednaki'; }
+// NEWSLETTER?
+if(isset($_POST['newsletter'])) { $poruke[]='Korisnik zeli news.';}
+
+if(isset($_POST['spol'])) {
+ $spol = $_POST['spol'];
+ if($spol=='M') { $poruke[]='Spol: muski'; }
+ elseif($spol=='Z') { $poruke[]='Spol: zenski'; }
+ else { $ok=false; $poruke[]='Spol: greska'; }
+}
+else { $ok=false; $poruke[]='Nije odabran spol';}
+
+$predlozak = $_POST['predlozak'];
+switch($predlozak){
+	case 'P': $poruke[]='Predlozak: PLAVI'; break; 
+	case 'Z': $poruke[]='Predlozak: ZELENI'; break; 
+	case 'N': $poruke[]='Predlozak: NARANCASTI'; break;
+	default: $ok=false; $poruke[]='Predlozak: GRESKA'; 
+}
+$poruka = $_POST['poruka'];
+if(!empty($poruka)){$poruke[]=$poruka; }
+
+
+
+
+if($ok){ echo 'Hvala na registraciji'; }
+else 
+{ 
+	foreach($poruke as $p)
+	{
+		echo $p.'<br>';
+	}
+ } 
+ 
+ var_dump($poruke);
+?>
+
+</body>
+</html>
