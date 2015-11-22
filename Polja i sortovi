@@ -1,0 +1,83 @@
+﻿<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<?php
+
+echo '<h3>ksort</h3>';
+$a = array(
+	40 => "jedan",
+	20 => "tri",
+	0 => "pet",
+	10 => "četiri",
+	30 => "dva",
+);
+
+/ ISPIS KLJUČEVA I VRIJEDNOSTI
+foreach($a as $key => $value)
+{
+	echo $key.' ==> '.$value.'<br>';
+}
+// ISPIS SAMO VRIJEDNOSTI
+foreach($a as $p)
+{
+	echo $p.'<br>';
+}
+
+var_dump($a);
+// ksort SORTIRA PO KLUČU UZLAZNO
+ksort($a);
+var_dump($a);
+
+echo '<h3>krsort</h3>';
+// krsort SORTIRA PO KLUČU SILAZNO
+krsort($a);
+var_dump($a);
+
+echo '<h3>sort</h3>';
+$b = array(15, 5, 10, 25, 20);
+var_dump($b);
+// sort SORTIRA PO VRIJEDNOSTI UZLAZNO
+sort($b);
+var_dump($b);
+
+echo '<h3>rsort</h3>';
+$c = array("B", "A", "D", "C");
+var_dump($c);
+// rsort SORTIRA PO VRIJEDNOSTI SILAZNO
+rsort($c);
+var_dump($c);
+
+
+
+
+
+
+// NEKA 2D POLJA
+$a = array(
+	array("prvi", "drugi", "treći"),
+	array(1, 2, 3, 4, 5),
+	array(
+		"a" => "jedan",
+		"b" => "dva",
+		"c" => "tri",
+	),
+);
+$b = array(
+	array("ABC", "DEF", "GHI"),
+	array("neke", "string", "vrijednosti"),
+);
+$c = array(
+	array(5.4, 10.5, 24.6),
+	array(100, 99, 98, 97, 96, 95),
+	array("Z", "R", "I", "Q"),
+);
+// 3D POLJE
+$polje = array($a, $b, $c);
+var_dump($polje);
+?>
+</body>
+</html>
