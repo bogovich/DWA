@@ -1,0 +1,26 @@
+<?php
+// 1. korak - dohvacanje trazene akcije (ili default vrijednost)
+if(isset($_GET['akcija'])) 
+	{ $a = $_GET['akcija']; }
+else 
+	{ $a = ''; }
+
+// 2. korak - izvrsavanje trazene akcije ili default akcija
+switch($a)
+{
+	case 'pf': display_login_form(); break;
+	case 'rf': display_register_form(); break;
+	case 'pp': login(); break;
+	case 'rp': register(); break;
+	default: display_login_form();
+} 
+
+<?php
+
+foreach($_POST as $key=>$value)
+{
+	echo "Kljuc = $key ===> $value <br> ";
+}
+?>
+
+?>
