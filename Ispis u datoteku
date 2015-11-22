@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>Untitled Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<?php
+
+//if-ovi i lockovi su opcionalni
+$path = 'file.txt';
+
+if(file_exists($path)) // DA LI POSTOJI DATOTEKA?
+{
+	if(is_writeable($path)) // MOŽE PISATI?
+	{
+		
+		$fh = fopen($path, 'w');  //stavi a umjesto w za dodavanje 		        
+                flock($fh, LOCK_EX);		
+		fwrite($fh, $sadrzaj);		
+		flock($fh, LOCK_UN);
+		fclose($fh);
+}
+}
+?>
+</body>
+</html>
