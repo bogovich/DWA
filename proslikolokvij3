@@ -1,0 +1,44 @@
+<?php
+
+/* 
+(z3.php) Napraviti PHP datoteku koja će prikazati obrazac sa dva tekstualna polja 
+ * u koja se unosi raspon godine neovisnosti (npr. od 1800 do 1900 ). 
+ * Kada korisnik pritisne dugme „Submit“ prikazuju se popis tih godina.
+ * (moze se dodati i naziv ili bilosta).
+ */
+
+if(!$_POST){
+    ?>
+<form method="post" action="">
+    <p>Donja granica: <input type="text" name="donja"></p>
+    <p>Gornja granica: <input type="text" name="gornja"></p>
+    <p><input type="submit" name="submit" value="Submit"></p>
+
+<?php
+}
+else{
+$donja=$_POST['donja'];
+$gornja=$_POST['gornja'];
+$novopolje=array();
+
+$file='countries.txt';
+$fp=fopen($file,'r');
+while(($red=fgets($fp,4096))!=false)
+{
+    $podaci=explode("\t",$red);
+    //if (!in_array($podaci[5], $polje)){
+            array_push($novopolje, $podaci[5]);
+            //array_push($novopolje, $podaci[6]);
+        //}
+   
+}
+
+    foreach($novopolje as $p)
+    {
+        if ($p>=$donja && $p<=$gornja)
+            echo '<p>'.$p.' </p>';
+    }   
+}
+?>
+
+ 
