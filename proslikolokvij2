@@ -1,0 +1,31 @@
+<?php
+
+/* 
+(z2.php) Ispišite na ekranu zapise iz izvora podataka u obliku HTML tablice. 
+ * Ispisujete samo 10 redaka ali počevši od retka 20. Ispisujete samo prvih 5 
+ * podatka u retku (ne sve podatke). Zadnji redak tablice neka (u zadnjem, 
+ * petom stupcu) prikaže ukupni zbroj povrsina.
+ */
+$file = 'countries.txt';
+$fp = fopen($file, 'r');
+$brojac = 1;
+$suma = 0;
+echo '<table border="1" cellpadding="4">';
+while (($red = fgets($fp, 4096)) !== false) {  //sve dok ima redova u fileu (do kraja datoteke) fgetsuzima prvo prvi red i cita ga do 4096 znaka
+    $podaci = explode("\t", $red);    //u polje podaci koje nastaje svakom novom iteracijom sprema se taj red exploadan po tabulatoru(svaka rijec odvojena tabom postaje dio tog polja tj.p[0] p[1]...itd
+    if ($brojac >= 20 && $brojac < 30) {
+        echo '<tr>';
+        echo '<td>' . $podaci[0] . '</td>';
+        echo '<td>' . $podaci[1] . '</td>';
+        echo '<td>' . $podaci[2] . '</td>';
+        echo '<td>' . $podaci[3] . '</td>';
+        $suma += $podaci[4];
+        echo '<td>'.$suma.'</td>';
+        echo '<tr>';
+        
+    }
+    $brojac++;
+}
+echo '</table>';
+fclose($fp);
+?>
