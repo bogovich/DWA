@@ -1,0 +1,61 @@
+<?php
+
+/*
+(z1.php) Napravite PHP datoteku koja najprije prikazuje HTML obrazac sa dva 
+ * tekstualna polja (u koji se upisuju dva broja), te 4 radio buttona koji 
+ * definiraju operaciju nad ta dva broja (zbrajanje, oduzimanje, množenje, dijeljenje).
+ *  Kada korisnik pritisne dugme Submit, ista stranica će ispisati rezultat odabrane 
+ * operacije nad ta dva broja.Napravit provjeru da oba broja postoje te da drugi broj nije 0
+ * (dijeljenje s 0)
+ *  */
+
+if (!$_POST){
+?>
+<form method="post" action="" >
+    <p>Prvi broj: <input type="text" name="prvi"></p>
+    <p>Drugi broj: <input type="text" name="drugi"></p>
+    <p>Operacija: 
+        Zbrajanje <input type="radio" name="operacija" value="+"><br>
+        Oduzimanje <input type="radio" name="operacija" value="-"><br>
+        Mnozenje <input type="radio" name="operacija" value="*"><br>
+        Dijeljenje <input type="radio" name="operacija" value=""/><br>
+    </p>
+    <p><input type="submit" name="submit" value="Submit"></p>      
+<?php
+}else {
+    if (empty(($_POST['prvi'])) || empty(($_POST['drugi'])))
+        echo 'Nisu unesena oba broja!';
+    else {
+        $a=$_POST['prvi'];
+        $b=$_POST['drugi'];
+        $o=$_POST['operacija'];
+        switch($o){
+            case'+':
+                $rez=$a+$b;
+                echo 'Zbroj je '.$rez;
+                break;
+            case'-':
+                $rez=$a-$b;
+                echo 'Razlika je '.$rez;
+                break;
+            case'*':
+                $rez=$a*$b;
+                echo 'Umnozak je '.$rez;
+                break;
+            case'/':
+                if ($b!='0'){
+                     $rez=$a/$b;
+                    echo 'Kvocijent je '.$rez;
+                   
+                    }
+                else 
+                {
+                    echo 'Nemoguce dijeljenje sa nuloom!'; 
+                    
+                }
+                break;        
+        }
+    }
+    
+    
+}
