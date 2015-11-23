@@ -1,0 +1,28 @@
+<?php
+
+if (!isset($_GET['id'])) { //popis zemalja tj smo polja 11 kao din linkova
+    $file = 'countries.txt';
+    $fp = fopen($file, 'r');
+    while (($red = fgets($fp, 4096)) !== false) {
+        $stupci = explode("\t", $red);
+        echo '<a href="?id=' . $stupci[11] . '">' . $stupci[11] . '</a><br>';
+    }
+} else {    //kada se klikne na link prikazu se podaci u tablici htmla o toj zemlji
+    $id = $_GET['id'];
+    $file = 'countries.txt';
+    $fp = fopen($file, 'r');
+    echo '<table border="1" cellpadding="4">';
+    while (($red = fgets($fp, 4096)) !== false) {
+        $stupci = explode("\t", $red);
+        if ($stupci[11] == $id) {  // DA LI JE OVO TRAZENI REDAK
+            echo '<tr>';
+            foreach ($stupci as $s) {  // ISPISI SVE PODATKE O TOJ ZEMLJI
+                echo '<td>' . $s . '</td>';
+            }
+            break;  // NASLI SMO I ISPISALI PODATKE; PREKINI PETLJU! break whilee!!
+            echo '</tr>';
+        }
+    }
+    echo '</table>';
+}
+?>
