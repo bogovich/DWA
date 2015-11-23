@@ -1,0 +1,47 @@
+<?php
+/* 
+ * NAPRAVITI IF POST ELSE STRUKTURU ZA UNOS ZAPISA U DATOTEKU
+ * KORISNIK U OBRAZAC UNOSI: oib, ime, prezime, email, postbr
+ * SPREMITI U DATOTEKU gradjani.txt
+ */
+if(!$_POST){
+?>
+  <form method="post" action="">
+    <p>OIB: <input type="text" name="oib"> </p>
+    <p>Ime: <input type="text" name="ime"> </p>
+    <p>Prezime: <input type="text" name="prezime"> </p>
+    <p>Email: <input type="text" name="email"> </p>
+    <p>Poštanski broj:  
+    <select name="postbr">
+        <?php
+        // OTVORITI DATOTEKU postanski.txt ZA CITANJE
+        $f = fopen('postanski.txt','r');
+        // ZA SVAKI REDAK U DATOTECI ISPISATI:
+        while (($redak = fgets($f, 4096)) !== false) {
+            $polje = explode("\t",$redak);
+echo '<option value="'.$polje[0].'">'.$polje[0].'-'.$polje[1].'</option>'; 
+        }
+        // ZATVORITI DATOTEKU
+        fclose($f);
+        ?>
+    </select> </p>
+    <p><input type="submit" name="submit" value="Unesi"> </p>
+  </form>
+<?php
+}
+else {
+    // pokupiti podatke
+    $oib = $_POST['oib'];
+    $ime = $_POST['ime'];
+    $prezime = $_POST['prezime'];
+    $email = $_POST['email'];
+    $postbr = $_POST['postbr'];
+    // priprema retka
+$redak = $oib."\t".$ime."\t".$prezime."\t".$email."\t".$postbr."\n";
+    // unos
+    $f = fopen('gradjani.txt','a');
+    flock($f, LOCK_EX);
+    fwrite($f,$redak);
+    flock($f, LOCK_UN);
+    fclose($f);    
+}
